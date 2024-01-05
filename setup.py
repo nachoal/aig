@@ -6,7 +6,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         'GitPython',  # For interacting with Git
-        'requests',   # For OpenAI API calls
+        'openai',   # For OpenAI API calls
         'keyring'     # For secure storage of API key
     ],
     entry_points={

@@ -1,8 +1,8 @@
-import requests
+from openai import OpenAI
 
 def generate_commit_message(diff_data, api_key):
     """
-    Generates a commit message using OpenAI's GPT-4 based on the provided diff data.
+    Generates a commit message using OpenAI's GPT-4 32k based on the provided diff data.
     
     :param diff_data: Dictionary with file paths as keys and diffs as values.
     :param api_key: OpenAI API key.
@@ -11,27 +11,34 @@ def generate_commit_message(diff_data, api_key):
     # Prepare the prompt
     prompt = prepare_prompt(diff_data)
 
-    # OpenAI API URL
-    api_url = "https://api.openai.com/v1/engines/davinci-codex/completions"
-
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {api_key}"
-    }
+    # Set the OpenAI API key
+    client = OpenAI(
+        api_key=api_key,
+    )
 
     data = {
-        "prompt": prompt,
-        "max_tokens": 150,
+        "messages": [
+            {"role": "system", "content": """
+            You are an expert level git commit message generator AI.
+            You will be given a list of files and their diffs. 
+            Your goal is to return the best commit message summary for the changes.
+            REMEMBER TO: 
+            - ONLY RETURN THE MESSAGE AND NOTHING ELSE.
+            - USE PRESENT TENSE.
+            - KEEP IT SHORT AND SIMPLE.
+            """
+             },
+            {"role": "user", "content": prompt}
+        ],
+        "max_tokens": 1000,
         "temperature": 0.7
     }
 
     try:
-        response = requests.post(api_url, headers=headers, json=data)
-        response.raise_for_status()
-        result = response.json()
-        commit_message = result.get("choices", [{}])[0].get("text", "").strip()
+        response = client.chat.completions.create(model="gpt-4-1106-preview", **data)
+        commit_message = response.choices[0].message.content.strip()
         return commit_message
-    except requests.RequestException as e:
+    except Exception as e:
         print(f"Error calling OpenAI API: {e}")
         return None
 
