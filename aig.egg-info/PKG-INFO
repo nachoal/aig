@@ -17,6 +17,10 @@ Classifier: Programming Language :: Python :: 3.9
 Classifier: Programming Language :: Python :: 3.10
 Requires-Python: >=3.6
 Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: GitPython
+Requires-Dist: openai
+Requires-Dist: keyring
 
 # AI-powered Git Helper (AIG)
 

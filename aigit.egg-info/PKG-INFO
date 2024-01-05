@@ -1,3 +1,27 @@
+Metadata-Version: 2.1
+Name: aigit
+Version: 0.1
+Summary: A CLI tool to automatically generate git commit messages using OpenAI GPT-4
+Home-page: https://github.com/nachoal/aig
+Author: Ignacio Alonso
+Author-email: ignacio.alley@gmail.com
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Version Control :: Git
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: GitPython
+Requires-Dist: openai
+Requires-Dist: keyring
+
 # AI-powered Git Helper (AIGIT)
 
 AIGIT is a command-line interface (CLI) tool that uses OpenAI to generate commit messages for your Git repositories. It checks the status of your Git repository, generates a commit message based on the changes, and commits those changes.

@@ -5,3 +5,5 @@ __pycache__
 *.pyd
 *.egg-info/venv
 aig.egg-info/
+build/
+dist/

@@ -4,7 +4,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name='aig',
+    name='aigit',
     version='0.1',
     author='Ignacio Alonso',
     author_email='ignacio.alley@gmail.com',
@@ -20,7 +20,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'aig = aig.main:main',
+            'aig = aigit.main:main',
         ],
     },
      classifiers=[

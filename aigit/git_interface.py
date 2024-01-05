@@ -1,5 +1,4 @@
 from git import Repo, GitCommandError
-import os
 
 def get_repo_path():
     """
@@ -27,7 +26,15 @@ def check_git_status():
     if not changed_files:
         return None
 
-    diffs = {file: repo.git.diff('HEAD', file) for file in changed_files}
+    diffs = {}
+    for file in changed_files:
+        try:
+            # Explicitly separate the revision and the file paths with '--'
+            file_diff = repo.git.diff('HEAD', '--', file)
+            diffs[file] = file_diff
+        except GitCommandError as e:
+            print(f"Error getting diff for {file}: {e}")
+
     return diffs
 
 def commit_changes(commit_message):
