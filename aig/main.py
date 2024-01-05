@@ -7,6 +7,7 @@ def main():
     # Parse arguments
     parser = argparse.ArgumentParser(description="AI-powered Git Helper")
     parser.add_argument('--config', action='store_true', help="Configure API Key")
+    parser.add_argument('-y', '--yes', action='store_true', help="Auto commit without asking for confirmation")
     args = parser.parse_args()
 
     # Configure API Key
@@ -33,6 +34,13 @@ def main():
     if not commit_message:
         print("Failed to generate commit message.")
         return
+
+    if not args.yes:
+        print("Generated commit message: ", commit_message)
+        confirm = input("Do you want to commit these changes? (y/n): ")
+        if confirm.lower() != 'y':
+            print("Commit cancelled.")
+            return
 
     # Commit changes
     commit_changes(commit_message)
