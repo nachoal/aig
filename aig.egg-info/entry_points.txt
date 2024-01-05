@@ -1,0 +1,2 @@
+[console_scripts]
+aig = aig.main:main
