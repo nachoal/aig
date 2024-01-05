@@ -25,7 +25,7 @@ def generate_commit_message(diff_data, api_key):
             REMEMBER TO: 
             - ONLY RETURN THE MESSAGE AND NOTHING ELSE.
             - USE PRESENT TENSE.
-            - KEEP IT SHORT AND SIMPLE.
+            - KEEP IT 50 CHARACTERS OR LESS.
             """
              },
             {"role": "user", "content": prompt}
