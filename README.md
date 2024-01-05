@@ -7,7 +7,7 @@ AIGIT is a command-line interface (CLI) tool that uses OpenAI to generate commit
 To install AIGIT, you need Python 3.10 and pip installed on your system. Clone the repository and navigate to the project directory. Then, run the following command:
 
 ```bash
-pip install .
+pip install aigit
 ```
 
 This will install the AIGIT package and its dependencies.
