@@ -8,10 +8,8 @@ def generate_commit_message(diff_data, api_key):
     :param api_key: OpenAI API key.
     :return: Generated commit message or None if unable to generate.
     """
-    # Prepare the prompt
     prompt = prepare_prompt(diff_data)
 
-    # Set the OpenAI API key
     client = OpenAI(
         api_key=api_key,
     )
