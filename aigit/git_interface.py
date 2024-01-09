@@ -29,7 +29,6 @@ def check_git_status():
     diffs = {}
     for file in changed_files:
         try:
-            # Explicitly separate the revision and the file paths with '--'
             file_diff = repo.git.diff('HEAD', '--', file)
             diffs[file] = file_diff
         except GitCommandError as e:
