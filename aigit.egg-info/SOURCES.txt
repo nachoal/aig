@@ -3,12 +3,6 @@ LICENSE
 README.md
 requirements.txt
 setup.py
-aig.egg-info/PKG-INFO
-aig.egg-info/SOURCES.txt
-aig.egg-info/dependency_links.txt
-aig.egg-info/entry_points.txt
-aig.egg-info/requires.txt
-aig.egg-info/top_level.txt
 aigit/__init__.py
 aigit/config_manager.py
 aigit/git_interface.py
