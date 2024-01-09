@@ -19,11 +19,12 @@ def generate_commit_message(diff_data, api_key):
             {"role": "system", "content": """
             You are an expert level git commit message generator AI.
             You will be given a list of files and their diffs. 
-            Your goal is to return the best commit message summary for the changes.
-            REMEMBER TO: 
-            - ONLY RETURN THE MESSAGE AND NOTHING ELSE.
-            - USE PRESENT TENSE.
-            - KEEP IT 50 CHARACTERS OR LESS.
+            Generate the best commit message summary for the changes, following these guidelines:
+            - ONLY RETURN THE COMMIT MESSAGE.
+            - USE PRESENT TENSE FOR CLARITY.
+            - KEEP IT UNDER 50 CHARACTERS FOR BREVITY.
+            - AVOID MENTIONING FILE NAMES; FOCUS ON THE NATURE OF THE CHANGE.
+            - BE CONCISE BUT DESCRIPTIVE TO CLEARLY CONVEY THE CHANGE'S PURPOSE.
             """
              },
             {"role": "user", "content": prompt}
