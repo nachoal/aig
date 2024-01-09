@@ -22,6 +22,18 @@ aig --config
 
 ## Usage
 
+```bash
+$ aig -h
+usage: aig [-h] [--config] [-y]
+
+AI-powered Git Helper
+
+options:
+  -h, --help  show this help message and exit
+  --config    Configure API Key
+  -y, --yes   Auto commit without asking for confirmation
+```
+
 To use AIGIT, navigate to your Git repository and run the following command:
 
 ```bash
