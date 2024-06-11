@@ -1,10 +1,32 @@
-venv
-__pycache__
-*.pyc
-*.pyo
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
 *.pyd
-*.egg-info/venv
-aig.egg-info/
+
+# Distribution / packaging
 build/
 dist/
+*.egg-info/
+*.egg
+
+# Virtual environments
+venv/
+
+# macOS specific
 .DS_Store
+
+# IDEs and editors
+.idea/           # PyCharm
+.vscode/         # Visual Studio Code settings
+*.swp            # Vim swap files
+*.swo            # Vim swap files
+
+# Testing
+.coverage
+.cache
+nosetests.xml
+*.cover
+
+# Jupyter Notebook
+.ipynb_checkpoints
