@@ -2,6 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 from aigit.main import main
 from aigit.git_interface import get_new_files, check_git_status
+from aigit.openai_interface import generate_commit_message
 
 class TestGitInterface(unittest.TestCase):
     
@@ -21,6 +22,15 @@ class TestGitInterface(unittest.TestCase):
         status = check_git_status()
         self.assertIn("new_files", status)
         self.assertEqual(status["new_files"], ["new_file.txt"])
+
+    @patch('aigit.openai_interface.generate_commit_message')
+    def test_generate_commit_message(self, mock_generate_commit_message):
+        diff_data = {"file1.txt": "diff"}
+        new_files = ["new_file.txt"]
+        api_key = "test_api_key"
+        mock_generate_commit_message.return_value = "Test commit message"
+        commit_message = generate_commit_message(diff_data, new_files, api_key)
+        self.assertEqual(commit_message, "Test commit message")
 
 if __name__ == '__main__':
     unittest.main()
