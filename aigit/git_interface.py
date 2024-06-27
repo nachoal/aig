@@ -11,9 +11,23 @@ def get_repo_path():
     except GitCommandError:
         return None
 
+def get_new_files():
+    """
+    Identifies new files in the Git repository.
+    Returns a list of new file paths.
+    """
+    repo_path = get_repo_path()
+    if not repo_path:
+        print("Not in a Git repository.")
+        return None
+
+    repo = Repo(repo_path)
+    new_files = [item.a_path for item in repo.index.diff('HEAD') if item.new_file]
+    return new_files
+
 def check_git_status():
     """
-    Checks the status of the Git repository and returns modified files and their diffs.
+    Checks the status of the Git repository and returns modified files, new files, and their diffs.
     Returns None if no changes or not in a Git repo.
     """
     repo_path = get_repo_path()
@@ -23,7 +37,8 @@ def check_git_status():
 
     repo = Repo(repo_path)
     changed_files = [item.a_path for item in repo.index.diff(None)]
-    if not changed_files:
+    new_files = get_new_files()
+    if not changed_files and not new_files:
         return None
 
     diffs = {}
@@ -34,7 +49,7 @@ def check_git_status():
         except GitCommandError as e:
             print(f"Error getting diff for {file}: {e}")
 
-    return diffs
+    return {"changed_files": diffs, "new_files": new_files}
 
 def commit_changes(commit_message):
     """

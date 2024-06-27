@@ -24,13 +24,16 @@ def main():
         return
 
     # Check git status and get diffs
-    diffs = check_git_status()
-    if not diffs:
+    status = check_git_status()
+    if not status:
         print("No changes detected.")
         return
 
+    diffs = status["changed_files"]
+    new_files = status["new_files"]
+
     # Generate commit message using OpenAI
-    commit_message = generate_commit_message(diffs, api_key)
+    commit_message = generate_commit_message(diffs, new_files, api_key)
     if not commit_message:
         print("Failed to generate commit message.")
         return
