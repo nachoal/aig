@@ -28,7 +28,7 @@ def generate_commit_groups(diff_data, api_key):
     try:
         logging.info("Sending request to OpenAI API")
         commit_groups = client.chat.completions.create(
-            model="gpt-4-1106-preview",
+            model="gpt-4-turbo",
             response_model=CommitGroups,
             messages=[
                 {"role": "system", "content": """
