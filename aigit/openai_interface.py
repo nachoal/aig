@@ -45,7 +45,7 @@ def generate_commit_groups(diff_data, api_key):
             max_tokens=2000,
             temperature=0.7
         )
-        log.info(f"Received commit groups from OpenAI: {commit_groups}")
+        log.debug(f"Received commit groups from OpenAI: {commit_groups}")
         return commit_groups
     except Exception as e:
         log.error(f"Error calling OpenAI API: {e}")
