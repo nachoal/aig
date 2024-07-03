@@ -53,3 +53,10 @@ Contributions are welcome! Please feel free to submit a pull request.
 ## License
 
 AIGIT is open-source software licensed under the MIT license.
+
+## Manual deployment instructions
+
+1. Update the version number in `setup.py`
+2. Delete `dist/`, `build/` and `aigit.egg-info` folders
+3. Run `python setup.py sdist bdist_wheel`
+4. Run `twine upload dist/*`
