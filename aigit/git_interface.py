@@ -46,9 +46,10 @@ def get_detailed_diff():
 
     return diffs
 
-def commit_changes(commit_message):
+def commit_changes(commit_message, files=None):
     """
     Commits changes in the Git repository with the provided commit message.
+    If files are specified, only those files will be committed.
     """
     repo_path = get_repo_path()
     if not repo_path:
@@ -57,7 +58,10 @@ def commit_changes(commit_message):
 
     repo = Repo(repo_path)
     try:
-        repo.git.add(A=True)
+        if files:
+            repo.git.add(files)
+        else:
+            repo.git.add(A=True)
         repo.index.commit(commit_message)
         return True
     except GitCommandError as e:
