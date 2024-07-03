@@ -1,3 +1,5 @@
+import os
+import logging
 from git import Repo, GitCommandError
 
 def get_repo_path():
@@ -11,28 +13,36 @@ def get_repo_path():
     except GitCommandError:
         return None
 
-def check_git_status():
+def get_detailed_diff():
     """
-    Checks the status of the Git repository and returns modified files and their diffs.
-    Returns None if no changes or not in a Git repo.
+    Gets a detailed diff of all changes in the repository.
+    Returns a dictionary with file paths as keys and their full diff as values.
     """
     repo_path = get_repo_path()
     if not repo_path:
-        print("Not in a Git repository.")
+        logging.info("Not in a Git repository.")
         return None
 
     repo = Repo(repo_path)
-    changed_files = [item.a_path for item in repo.index.diff(None)]
-    if not changed_files:
-        return None
-
     diffs = {}
-    for file in changed_files:
+
+    # Tracked files
+    for item in repo.index.diff(None):
+        diffs[item.a_path] = {
+            'content': repo.git.diff('HEAD', '--', item.a_path),
+            'status': 'modified'
+        }
+
+    # Untracked files
+    for file in repo.untracked_files:
         try:
-            file_diff = repo.git.diff('HEAD', '--', file)
-            diffs[file] = file_diff
-        except GitCommandError as e:
-            print(f"Error getting diff for {file}: {e}")
+            with open(os.path.join(repo.working_tree_dir, file), 'r') as f:
+                diffs[file] = {
+                    'content': f.read(),
+                    'status': 'new'
+                }
+        except IOError as e:
+            logging.error(f"Error reading untracked file {file}: {e}")
 
     return diffs
 

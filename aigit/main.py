@@ -1,50 +1,60 @@
 import argparse
-from .git_interface import check_git_status, commit_changes
-from .openai_interface import generate_commit_message
+import logging
+from .logger import setup_logger
+from .git_interface import get_detailed_diff, commit_changes
+from .openai_interface import generate_commit_groups
 from .config_manager import get_api_key, store_api_key
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def main():
     # Parse arguments
     parser = argparse.ArgumentParser(description="AI-powered Git Helper")
     parser.add_argument('--config', action='store_true', help="Configure API Key")
     parser.add_argument('-y', '--yes', action='store_true', help="Auto commit without asking for confirmation")
+    parser.add_argument('-v', '--verbose', action='store_true', help="Enable verbose logging")
     args = parser.parse_args()
+
+    setup_logger(args.verbose)
 
     # Configure API Key
     if args.config:
         api_key = input("Enter your OpenAI API key: ")
         store_api_key(api_key)
-        print("API Key stored securely.")
+        logging.info("API Key stored securely.")
         return
 
     # Ensure API key is set
     api_key = get_api_key()
     if not api_key:
-        print("API key not found. Please run 'aig --config' to set your API key.")
+        logging.info("API key not found. Please run 'aig --config' to set your API key.")
         return
 
     # Check git status and get diffs
-    diffs = check_git_status()
-    if not diffs:
-        print("No changes detected.")
+    changes = get_detailed_diff()
+    if not changes:
+        logging.info("No changes detected.")
         return
-
-    # Generate commit message using OpenAI
-    commit_message = generate_commit_message(diffs, api_key)
-    if not commit_message:
-        print("Failed to generate commit message.")
+    
+    commit_groups = generate_commit_groups(changes, api_key)
+    if not commit_groups:
+        logging.error("Failed to generate commit groups.")
         return
 
     if not args.yes:
-        print("Generated commit message: ", commit_message)
-        confirm = input("Do you want to commit these changes? (y/n): ")
+        print("Generated commit groups:")
+        for i, commit in enumerate(commit_groups.commits, 1):
+            print(f"{i}. {commit.message}")
+            print(f"   Files: {', '.join(commit.files)}")
+        confirm = input("Do you want to proceed with these commits? (y/n): ")
         if confirm.lower() != 'y':
-            print("Commit cancelled.")
+            logging.info("Commit process cancelled.")
             return
 
-    # Commit changes
-    commit_changes(commit_message)
-    print("Changes committed with message: ", commit_message)
+    for commit in commit_groups.commits:
+        commit_changes(commit.message)
+        logging.info(f"Committed: {commit.message}")
 
 if __name__ == "__main__":
     main()

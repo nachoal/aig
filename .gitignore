@@ -13,6 +13,9 @@ dist/
 # Virtual environments
 venv/
 
+# Environment variables
+.env
+
 # macOS specific
 .DS_Store
 
