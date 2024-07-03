@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='aigit',
-    version='0.1.4',
+    version='0.1.6',
     author='Ignacio Alonso',
     author_email='ignacio.alley@gmail.com',
     description='A CLI tool to automatically generate git commit messages using OpenAI GPT-4',
@@ -16,7 +16,11 @@ setup(
     install_requires=[
         'GitPython',  # For interacting with Git
         'openai',   # For OpenAI API calls
-        'keyring'     # For secure storage of API key
+        'keyring',     # For secure storage of API key
+        'instructor',
+        'loguru',
+        'tiktoken',
+        'python-dotenv' # Clean this up, not needed for the package
     ],
     entry_points={
         'console_scripts': [
