@@ -52,7 +52,7 @@ def main():
             return
 
     for commit in commit_groups.commits:
-        commit_changes(commit.message)
+        commit_changes(commit.message, commit.files)
         log.info(f"Committed: {commit.message}")
 
 if __name__ == "__main__":
