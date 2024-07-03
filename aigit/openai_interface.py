@@ -1,4 +1,4 @@
-import logging
+from aigit.logger import log
 from openai import OpenAI
 import instructor
 from instructor import OpenAISchema
@@ -26,7 +26,7 @@ def generate_commit_groups(diff_data, api_key):
     client = instructor.patch(client)
 
     try:
-        logging.info("Sending request to OpenAI API")
+        log.info("Sending request to OpenAI API")
         commit_groups = client.chat.completions.create(
             model="gpt-4-turbo",
             response_model=CommitGroups,
@@ -45,10 +45,10 @@ def generate_commit_groups(diff_data, api_key):
             max_tokens=2000,
             temperature=0.7
         )
-        logging.info(f"Received commit groups from OpenAI: {commit_groups}")
+        log.info(f"Received commit groups from OpenAI: {commit_groups}")
         return commit_groups
     except Exception as e:
-        logging.error(f"Error calling OpenAI API: {e}")
+        log.error(f"Error calling OpenAI API: {e}")
         return None
 
 def prepare_prompt(diff_data):

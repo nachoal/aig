@@ -1,7 +1,8 @@
-import logging
+from loguru import logger
+import sys
 
 def setup_logger(verbose):
-    logging.basicConfig(
-        level=logging.DEBUG if verbose else logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    )
+    logger.remove()
+    logger.add(sys.stderr, level="DEBUG" if verbose else "INFO")
+
+log = logger

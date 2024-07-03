@@ -1,5 +1,5 @@
 import os
-import logging
+from aigit.logger import log
 from git import Repo, GitCommandError
 
 def get_repo_path():
@@ -20,7 +20,7 @@ def get_detailed_diff():
     """
     repo_path = get_repo_path()
     if not repo_path:
-        logging.info("Not in a Git repository.")
+        log.info("Not in a Git repository.")
         return None
 
     repo = Repo(repo_path)
@@ -42,7 +42,7 @@ def get_detailed_diff():
                     'status': 'new'
                 }
         except IOError as e:
-            logging.error(f"Error reading untracked file {file}: {e}")
+            log.error(f"Error reading untracked file {file}: {e}")
 
     return diffs
 
@@ -52,7 +52,7 @@ def commit_changes(commit_message):
     """
     repo_path = get_repo_path()
     if not repo_path:
-        print("Not in a Git repository.")
+        log.info("Not in a Git repository.")
         return False
 
     repo = Repo(repo_path)
@@ -61,5 +61,5 @@ def commit_changes(commit_message):
         repo.index.commit(commit_message)
         return True
     except GitCommandError as e:
-        print(f"Error committing changes: {e}")
+        log.error(f"Error committing changes: {e}")
         return False

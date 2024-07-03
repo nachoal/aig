@@ -1,6 +1,5 @@
 import argparse
-import logging
-from .logger import setup_logger
+from .logger import log, setup_logger
 from .git_interface import get_detailed_diff, commit_changes
 from .openai_interface import generate_commit_groups
 from .config_manager import get_api_key, store_api_key
@@ -22,24 +21,24 @@ def main():
     if args.config:
         api_key = input("Enter your OpenAI API key: ")
         store_api_key(api_key)
-        logging.info("API Key stored securely.")
+        log.info("API Key stored securely.")
         return
 
     # Ensure API key is set
     api_key = get_api_key()
     if not api_key:
-        logging.info("API key not found. Please run 'aig --config' to set your API key.")
+        log.info("API key not found. Please run 'aig --config' to set your API key.")
         return
 
     # Check git status and get diffs
     changes = get_detailed_diff()
     if not changes:
-        logging.info("No changes detected.")
+        log.info("No changes detected.")
         return
     
     commit_groups = generate_commit_groups(changes, api_key)
     if not commit_groups:
-        logging.error("Failed to generate commit groups.")
+        log.error("Failed to generate commit groups.")
         return
 
     if not args.yes:
@@ -49,12 +48,12 @@ def main():
             print(f"   Files: {', '.join(commit.files)}")
         confirm = input("Do you want to proceed with these commits? (y/n): ")
         if confirm.lower() != 'y':
-            logging.info("Commit process cancelled.")
+            log.info("Commit process cancelled.")
             return
 
     for commit in commit_groups.commits:
         commit_changes(commit.message)
-        logging.info(f"Committed: {commit.message}")
+        log.info(f"Committed: {commit.message}")
 
 if __name__ == "__main__":
     main()
