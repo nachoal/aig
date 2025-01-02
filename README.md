@@ -92,9 +92,15 @@ To remove dependencies:
 uv remove <package-name>
 ```
 
+### Version Updates
+
+When releasing a new version, update the version number in both:
+1. `pyproject.toml`: Update the `version = "x.x.x"` field under `[project]`
+2. `aigit/__init__.py`: Update the `__version__ = "x.x.x"` variable
+
 ### Building and Publishing
 
-1. Update the version in `pyproject.toml`
+1. Update the version as described above
 2. Run the deployment command:
    ```bash
    uv run deploy
