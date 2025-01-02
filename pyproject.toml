@@ -38,11 +38,3 @@ Homepage = "https://github.com/nachoal/aig"
 
 [project.scripts]
 aig = "aigit.main:main"
-
-[tool.uv.scripts]
-deploy = [
-    "rm -rf dist/ build/ *.egg-info/",
-    "uv build",
-    "uvx twine upload dist/*",
-    "rm -rf dist/ build/ *.egg-info/"
-]

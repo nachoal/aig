@@ -101,16 +101,29 @@ When releasing a new version, update the version number in both:
 ### Building and Publishing
 
 1. Update the version as described above
-2. Run the deployment command:
+2. Run the deployment script:
    ```bash
-   uv run deploy
+   ./scripts/deploy.sh
    ```
 
-The command will automatically:
+The script will:
 - Clean any existing build artifacts
 - Build the package with uv
 - Upload to PyPI
-- Clean up build artifacts
+- Clean up build artifacts if successful
+- Keep build artifacts for inspection if upload fails
+
+For manual deployment, you can run these commands individually:
+```bash
+# Clean artifacts
+rm -rf dist/ build/ *.egg-info/
+
+# Build
+uv build
+
+# Upload to PyPI
+uvx twine upload dist/*
+```
 
 ## Contributing
 
