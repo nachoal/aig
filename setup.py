@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='aigit',
-    version='0.1.6',
+    version='0.1.7',
     author='Ignacio Alonso',
     author_email='ignacio.alley@gmail.com',
     description='A CLI tool to automatically generate git commit messages using OpenAI GPT-4',
