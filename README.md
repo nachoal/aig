@@ -46,6 +46,45 @@ AIGIT will check the status of your Git repository, generate a commit message, a
 aig -y
 ```
 
+## Development
+
+### Setup Development Environment
+
+1. Clone the repository
+2. Install uv if you haven't already: `pip install uv`
+3. Install dependencies:
+   ```bash
+   uv pip install .
+   ```
+
+### Making Changes
+
+The project uses `pyproject.toml` for dependency management and build configuration. To add new dependencies:
+
+```bash
+uv add <package-name>
+```
+
+To remove dependencies:
+
+```bash
+uv remove <package-name>
+```
+
+### Building and Publishing
+
+1. Update the version in `pyproject.toml`
+2. Run the deployment command:
+   ```bash
+   uv run deploy
+   ```
+
+The command will automatically:
+- Clean any existing build artifacts
+- Build the package with uv
+- Upload to PyPI
+- Clean up build artifacts
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a pull request.
@@ -53,10 +92,3 @@ Contributions are welcome! Please feel free to submit a pull request.
 ## License
 
 AIGIT is open-source software licensed under the MIT license.
-
-## Manual deployment instructions
-
-1. Update the version number in `setup.py`
-2. Delete `dist/`, `build/` and `aigit.egg-info` folders
-3. Run `python setup.py sdist bdist_wheel`
-4. Run `twine upload dist/*`
